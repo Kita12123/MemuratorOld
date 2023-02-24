@@ -1,0 +1,43 @@
+SELECT
+    製品コード＊ AS 製品部品コード,
+    製品カナ＊ AS カナ名,
+    'ｾｲﾋﾝ' AS 部番,
+    '' AS 旧小売単価,
+    １級単価＊ AS 小売単価,
+    １級原価＊ AS 原価,
+    重量＊ AS 重量,
+    CASE
+        WHEN 廃止区分＊ = 2 THEN '廃止機種'
+        WHEN 廃止区分＊ = 1 THEN '廃止コード'
+        ELSE ''
+    END AS 廃止区分,
+    CASE
+        WHEN 作成日＊=0 THEN 0
+        WHEN 作成日＊=999999 THEN 99999999
+        ELSE 作成日＊+19500000
+    END AS 作成日
+FROM SEIMPF
+WHERE
+    {0}
+/* 原価は00で見るから出す
+AND  SUBSTR('0000000' || 製品コード＊,-2,2)<>'00'
+*/
+UNION ALL
+SELECT
+    部品コード＊ AS 製品部品コード,
+    部品カナ＊ AS カナ名,
+    部番＊ AS 部番,
+    旧単価＊ AS 旧小売単価,
+    単価＊ AS 小売単価,
+    原価＊ AS 原価,
+    重量＊ AS 重量,
+    '' AS 廃止区分,
+    CASE
+        WHEN 作成日＊=0 THEN 0
+        WHEN 作成日＊=999999 THEN 99999999
+        ELSE 作成日＊+19500000
+    END AS 作成日
+FROM BUHMPF
+WHERE
+    {0}
+ORDER BY 製品部品コード ASC

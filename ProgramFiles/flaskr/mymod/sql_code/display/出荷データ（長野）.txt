@@ -1,0 +1,54 @@
+SELECT
+    CASE
+        WHEN 伝票日付=0 THEN 0
+        WHEN 伝票日付=999999 THEN 99999999
+        ELSE 伝票日付+19500000
+    END AS 伝票日付,
+    ifnull(ET1.名称＊,'') AS 伝票区分名＊,
+    ifnull(ET2.名称＊,'') AS 委託区分名＊,
+    ifnull(ET4.名称＊,'') AS 扱い区分名＊,
+    ifnull(ET5.名称＊,'') AS 運送会社名＊,
+    ifnull(ET3.名称＊,'') AS 担当者名＊,
+    得意先コード,
+    得意先カナ,
+    CASE
+        WHEN 得意先コード>=500000 AND 得意先コード< 600000 THEN 雑コード
+        WHEN 得意先コード>=333800 AND 得意先コード<=333899 THEN 雑コード
+        ELSE ''
+    END AS 雑コード,
+    CASE
+        WHEN 得意先コード>=500000 AND 得意先コード< 600000 THEN ifnull(NI2.送荷先カナ＊,'')
+        WHEN 得意先コード>=333800 AND 得意先コード<=333899 THEN ifnull(NI2.送荷先カナ＊,'')
+        ELSE ''
+    END AS 雑カナ＊,
+    送荷先コード,
+    送荷先カナ,
+    製品部品コード,
+    製品部品カナ,
+    級区分,
+    CASE
+        /* 返品,値引き*/
+        WHEN 伝票区分=30 THEN 出荷数*-1
+        WHEN 伝票区分=90 THEN 出荷数*-1
+        ELSE 出荷数
+    END AS 数量,
+    単価,
+    CASE
+        /* 返品,値引き*/
+        WHEN 伝票区分=30 THEN 金額*-1
+        WHEN 伝票区分=90 THEN 金額*-1
+        ELSE 金額
+    END AS 金額,
+    出荷伝票番号 || 出荷行番号 AS 出荷伝票番号,
+    備考
+FROM SYUKAPFN
+LEFT OUTER JOIN ETCMPF ET1 ON ET1.レコード区分＊=10 AND ET1.コード＊=伝票区分
+LEFT OUTER JOIN ETCMPF ET2 ON ET2.レコード区分＊=20 AND ET2.コード＊=委託区分
+LEFT OUTER JOIN ETCMPF ET3 ON ET3.レコード区分＊=22 AND ET3.コード＊=担当者コード
+LEFT OUTER JOIN ETCMPF ET4 ON ET4.レコード区分＊=30 AND ET4.コード＊=SUBSTR('000' || 扱い運送,-3,1)
+LEFT OUTER JOIN ETCMPF ET5 ON ET5.レコード区分＊=40 AND ET5.コード＊=SUBSTR('000' || 扱い運送,-2,2)
+LEFT OUTER JOIN NIHONPF NI2 ON NI2.送荷先コード＊=雑コード
+WHERE
+    {0}
+AND   出荷数<>0
+ORDER BY 伝票日付 ASC

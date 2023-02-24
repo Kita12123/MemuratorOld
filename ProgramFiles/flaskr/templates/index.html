@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/table.css') }}">
+{% endblock %}
+
+{% block title %}
+  {% if Department == "Sales" %}
+    営業
+  {% elif Department == "Plant" %}
+    工場
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if Department == "Sales" %}
+    <div class="dummy">
+      <button formaction="{{ url_for('show_table') }}" 
+        name="DB_name" value="売上データ" onclick="showLoading();"></button>
+    </div><!--dummy-->
+    {% include "form_sales.html" %}
+  {% elif Department == "Plant" %}
+    <div class="dummy">
+      <button formaction="{{ url_for('show_table') }}" 
+        name="DB_name" value="仕入データ" onclick="showLoading();"></button>
+    </div><!--dummy-->
+    {% include "form_plant.html" %}
+  {% endif %}
+{% endblock %}

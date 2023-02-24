@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+  設定
+{% endblock %}
+
+{% block content %}
+  <div class="main-form">
+    <div class="subtitle">
+      ユーザー設定
+    </div><!--subtitle-->
+    <label for="MaxRows">最大行数:</label>
+    <input id="MaxRows" name="MaxRows" value="{{ MaxRows }}">
+    <br>
+    <label for="Department">所属部署:</label>
+    <select id="Department" name="Department">
+      <option value="{{ Department }}" selected>変更なし</option>
+      <option value="Sales">営業</option>
+      <option value="Plant">工場</option>
+    </select>
+    <br>
+    <label for="MyColor">メイン色:</label>
+    <select id="MyColor" name="MyColor">
+      <option value="{{ MyColor }}" selected>変更なし</option>
+      <option value="red"  >赤</option>
+      <option value="default">青</option>
+      <option value="green"  >緑</option>
+      <option value="black"  >黒</option>
+    </select>
+    <br>
+    <button class="bigbutton" name="ok" value="設定変更">設定変更</button>
+  </div><!--main-form-->
+  <div class="subtitle">
+    ログ参照
+    <a href="/setting" title="更新">
+      <img src="/static/image/iconRefresh.png" alt="更新">
+    </a>
+  </div><!--bigbutton-->
+  <div class="comments">
+    {% for t in log_texts %}
+      {{ t }}<br>
+    {% endfor %}
+  </div><!--comments-->
+  <div class="subtitle">
+    データ更新
+  </div>
+  {% if LastRefreshDate == "更新中" %}
+    更新中...
+  {% else %}
+    <label for="first_date">開始日付:</label>
+    <input type="date" id="first_date" name="first_date" value="{{ first_date }}" max="9999-12-31">
+    <label for="last_date" >終了日付:</label>
+    <input type="date" id="last_date" name="last_date" value="{{ last_date }}" max="9999-12-31">
+    <br>
+    <input type="checkbox" id="contain_master" name="contain_master" checked>
+    <label for="contain_master">マスターも更新する</label>
+    <br>
+    <button class="bigbutton" name="ok" value="最新データ取得" onclick="showLoading();">
+      最新データ取得
+    </button>
+  {% endif %}
+{% endblock %}

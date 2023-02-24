@@ -1,0 +1,6 @@
+SELECT
+    *
+FROM TEHAIPF
+WHERE
+    {0}
+ORDER BY 手配先コード, 納期 ASC

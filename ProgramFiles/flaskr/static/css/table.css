@@ -1,0 +1,82 @@
+/*
+###############################################################################
+    タグ
+###############################################################################
+*/
+input[type=checkbox] {
+	transform: scale(150%);
+}
+/*
+###############################################################################
+    jQuery
+###############################################################################
+*/
+.tablesorter th{
+    cursor: pointer;
+}
+.tablesorter th:hover{
+    text-decoration: underline;
+}
+/*
+###############################################################################
+    クラス
+###############################################################################
+*/
+/*
+### 入力フォーム ###
+*/
+.main-form table {
+    font-size: 85%;
+}
+.main-form tr td {
+    padding-bottom: 0.3%;
+}
+.main-form tr td:nth-of-type(1){
+    font-size: 123%;
+    width: 15%;
+    text-align: left;
+    border-bottom: 1px solid black;
+}
+.main-form tr td:nth-of-type(2){
+    width: 20%;
+    text-align: left;
+}
+.main-form tr td:nth-of-type(2) input{
+    width: 100%;
+}
+.main-form tr td:nth-of-type(3){
+    width: 35%;
+}
+/* 
+### データ表示 ###
+*/
+.dataframe table {
+    text-align: center;
+    font-size: 75%;
+    padding: 1%;
+}
+.dataframe thead {
+	border-bottom: 1px solid;
+    border-bottom: black;
+	vertical-align: bottom;
+}
+.dataframe thead input {
+    width: 100%;
+}
+.dataframe tbody tr:nth-child(odd) {
+	background: rgb(245, 245, 245);
+}
+.dataframe tr, th, td {
+	vertical-align: middle;
+	padding: 0.3% 0.1%;
+	line-height: normal;
+	white-space: normal;
+	max-width: none;
+    border: none;
+}
+.dataframe th {
+	font-weight: bold;
+    position: sticky;
+    top: 0;
+    left: 0;
+}

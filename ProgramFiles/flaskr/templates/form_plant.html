@@ -1,0 +1,48 @@
+<!-- 工場用　クエリフォーム -->
+<div class="subtitle">
+  <img src="/static/image/iconEdit.png" alt="フォーム">
+  入力フォーム
+  <button type="button" title="入力データを全て空にします"
+  onclick="clearClassValue('form');">クリア</button>
+</div><!--subtitle-->
+<div id="extract" class="main-form">
+  <table>
+    <tbody>
+      <tr>
+        <td><label for="開始日付">開始日付:</label></td>
+        <td><input type="date" class="form" id="開始日付"
+          name="開始日付" value="{{ user_form['開始日付'] }}" max="9999-12-31"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><label for="終了日付">終了日付:</label></td>
+        <td><input type="date" class="form" id="終了日付"
+          name="終了日付" value="{{ user_form['終了日付'] }}" max="9999-12-31"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><label for="手配先">手配先ｺｰﾄﾞ：</label></td>
+        <td><input type="text" class="form" id="手配先"
+          name="手配先" value="{{ user_form['手配先'] }}"></td>
+        <td><button formaction="{{ url_for('search', column='手配先') }}"
+          name="DB_name" value="手配先マスタ">手配先マスタ</button></td>
+      </tr>
+      <tr>
+        <td><label for="品目">品目ｺｰﾄﾞ：</label></td>
+        <td><input type="text" class="form" id="品目"
+          name="品目" value="{{ user_form['品目'] }}"></td>
+        <td><button formaction="{{ url_for('search', column='品目') }}"
+          name="DB_name" value="品目マスタ">品目マスタ</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="comments">
+    ※条件指定方法 - 区切りOR:[,|],AND:[&amp;]&nbsp;記号[&equals;,&gt;,&lt;,&gt;&equals;,&lt;&equals;]
+    <br>
+    最終更新日付:{{ LastRefreshDate }}
+  </div><!--comments-->
+    <button class="bigbutton" formaction="{{ url_for('show_table') }}" 
+      name="DB_name" value="仕入データ" onclick="showLoading();">仕入データ</button>
+      <!--<button class="bigbutton" formaction="{{ url_for('show_table') }}" 
+      name="DB_name" value="定期注文データ" onclick="showLoading();">定期注文データ</button>-->
+  </div><!--main-form-->

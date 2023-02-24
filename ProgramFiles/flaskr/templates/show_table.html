@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/static/css/table.css">
+{% endblock %}
+
+{% block script %}
+  <script type="text/javascript" src="/static/js/table.js"></script> 
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".sort-table").tablesorter();
+    });
+  </script>
+{% endblock %}
+
+{% block title %}
+  {{ user_form["DB_name"]}}参照
+{% endblock %}
+
+{% block content %}
+  <div class="dummy">
+    <button name="データ名" value="{{ user_form['DB_name'] }}" onclick="showLoading();"></button>
+  </div><!--dummy-->
+  {% if Department == "Sales" %}
+    {% include "form_sales.html" %}
+  {% elif Department == "Plant" %}
+    {% include "form_plant.html" %}
+  {% endif %}
+{% endblock %}
+
+
+{% block body %}
+  <div id="TableTagHeader">
+    データ選択
+  </div>
+  <div id="TableTagBody">
+    <div class="item" id="tab1b"><a id="tab1" href="javascript:showTable();"  >明細データ</a></div>
+    <div class="item" id="tab2b"><a id="tab2" href="javascript:showTotall1();">期別集計</a></div>
+    <div class="item" id="tab3b"><a id="tab3" href="javascript:showTotall2();">月別集計</a></div>
+    <div class="item" id="tab4b"><a id="tab4" href="javascript:showTotall3();">日別集計</a></div>
+  </div><!--TableTag-->
+  <div id="table">
+    <div class="content">
+      <a href="{{ url_for('download',flg='table') }}">
+        <img src="/static/image/iconDownload.png" alt="ダウンロード" width="18px">
+        &nbsp;ダウンロード
+      </a>&emsp;&emsp;
+      {% for m in messages %}
+        {{ m }} &emsp;&emsp;
+      {% endfor %}
+    </div><!--content-->
+    <!--Table of Data-->
+    <div class="comments">
+      ※列名に＊がついたものは、現在のマスタから取得しています。
+    </div><!--comments-->
+    <div class="dataframe">
+      <table class="sort-table">
+        <thead>
+          <tr>
+            {% for header in headers %}
+            <!--valueはuser_formから指定すると既に入ってしまう-->
+            <td>
+              {% if header in ["伝票日付","得意先コード","雑コード","送荷先コード","製品部品コード","担当者コード","伝票区分","品目コード"] %}
+              <input class="form" name="{{ header }}" value="{{ user_form[header] }}" readonly>
+              {% else %}
+              <input class="form" name="{{ header }}" value="{{ user_form[header] }}">
+              {% endif %}
+            </td>
+            {% endfor %}
+          </tr>
+          <tr>
+            {% for header in headers %}
+            <th>
+              {{ header }}
+            </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in records %}
+            <tr>
+              {% for rec in record %}
+              <td>{{ rec }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div><!--dataframe-->
+  </div><!--#table-->
+  <div id="totall1" style="display:none;">
+    <div class="content">
+      <a href="{{ url_for('download',flg='totall1') }}">
+        <img src="/static/image/iconDownload.png" alt="ダウンロード" width="18px">
+        &nbsp;ダウンロード
+      </a>
+    </div><!--content-->
+    <div class="dataframe">
+      <table>
+        <thead>
+          <tr>
+            {% for header in headers1 %}
+            <th>
+              {{ header }}
+            </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in records1 %}
+            <tr>
+              {% for rec in record %}
+              <td>{{ rec }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div><!--dataframe-->
+  </div><!--#totall1-->
+  <div id="totall2" style="display:none;">
+    <div class="content">
+      <a href="{{ url_for('download',flg='totall2') }}">
+        <img src="/static/image/iconDownload.png" alt="ダウンロード" width="18px">
+        &nbsp;ダウンロード
+      </a>
+    </div><!--content-->
+    <div class="dataframe">
+      <table>
+        <thead>
+          <tr>
+            {% for header in headers2 %}
+            <th>
+              {{ header }}
+            </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in records2 %}
+            <tr>
+              {% for rec in record %}
+              <td>{{ rec }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div><!--dataframe-->
+  </div><!--#totall2-->
+  <div id="totall3" style="display:none;">
+    <div class="content">
+      <a href="{{ url_for('download',flg='totall3') }}">
+        <img src="/static/image/iconDownload.png" alt="ダウンロード" width="18px">
+        &nbsp;ダウンロード
+      </a>
+    </div><!--content-->
+    <div class="dataframe">
+      <table>
+        <thead>
+          <tr>
+            {% for header in headers3 %}
+            <th>
+              {{ header }}
+            </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in records3 %}
+            <tr>
+              {% for rec in record %}
+              <td>{{ rec }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div><!--dataframe-->
+  </div><!--#totall3-->
+{% endblock %}

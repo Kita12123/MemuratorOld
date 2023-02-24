@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+  管理者画面
+{% endblock %}
+
+{% block content %}
+  <div class="subtitle">
+    サーバー設定
+  </div><!--subtitle-->
+  <label for="LastRefreshDate">最終更新日付:</label>
+  <input id="LastRefreshDate" name="LastRefreshDate" value="{{ LastRefreshDate }}">
+  <button name="ok" value="設定変更">設定変更</button>
+  <br>
+  <div class="subtitle">
+    SQL接続
+  </div>
+  <textarea style="width: 80%;font-size: 150%;" name="sql_code" rows="3">
+    {{ sql_code }}
+  </textarea>
+  <button class="bigbutton" name="ok" value="SQL送信">SQL送信</button>
+  <br>
+  {{ values }}
+  <br>
+  <div class="subtitle">
+    ログ参照
+  </div><!--bigbutton-->
+    <button name="ok" value="debug">debug</button>
+    &emsp;&emsp;
+    <button name="ok" value="info">info</button>
+    &emsp;&emsp;
+    <button name="ok" value="warning">warning</button>
+    &emsp;&emsp;
+    <button name="ok" value="critical">critical</button>
+  <div class="comments">
+    {% for t in log_texts %}
+      {{ t }}<br>
+    {% endfor %}
+  </div><!--comments-->
+{% endblock %}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>M端末</title>
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" 
+      href="{{ url_for('static',filename='css/color_' + MyColor + '.css') }}">
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body>
+    <!-- タイトル画面 -->
+    <div id="Title">
+      <div class="item" id="title-left" >
+        <a href="/">
+          初期画面へ&nbsp;
+          <img src="/static/image/iconHome.png" alt="戻る">
+        </a>
+      </div><!--titel-left-->
+      <div class="item" id="title-center">
+        <a href="/show_sql" style="color: black;">
+        {% block title %}
+        {% endblock %}
+        </a>
+      </div><!--title-center-->
+      <div class="item" id="title-right" >
+        <a href="/setting">
+          <img src="/static/image/iconSetting.png" alt="設定">
+          &nbsp;設定画面へ
+        </a>
+      </div><!--title-right-->
+    </div><!--title-->
+    <form method="POST">
+      <div class="content">
+        {% block content %}
+        {% endblock %}
+        <div id="loading" style="display:none;"></div>
+      </div><!--content-->
+      {% block body %}
+      {% endblock %}
+    </form><!--post-->
+    <br>
+    <footer class="footer" id="footer">
+      <p>お問い合わせ先：
+        <a href="mailto:h-kitaura@minoru-sangyo.co.jp" title="メールを開きます">
+          h-kitaura@minoru-sangyo.co.jp
+        </a>
+      </p>
+      <a href="#" title="最上部へ戻ります">トップページ</a>
+    </footer>
+    <script type="text/javascript" src="/static/js/base.js"></script>
+    <script type="text/javascript" src="/static/js/footerFixed.js"></script>
+    {% block script %}
+    {% endblock %}
+  </body>
+</html>

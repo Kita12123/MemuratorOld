@@ -1,0 +1,9 @@
+SELECT
+    コード＊ || '' AS 担当者コード,
+    名称＊ AS 名称,
+    カナ＊ AS カナ名
+FROM ETCMPF
+WHERE
+    {0}
+AND  レコード区分＊ = 22
+ORDER BY コード＊ ASC

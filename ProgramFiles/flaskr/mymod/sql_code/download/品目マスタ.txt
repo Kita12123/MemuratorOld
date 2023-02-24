@@ -1,0 +1,25 @@
+SELECT
+    品目コード＊ || '' AS 品目コード,
+    品目分類＊ AS 品目分類,
+    品目カナ＊ AS カナ名,
+    品目名＊ AS 名称,
+    仕様＊ AS 仕様,
+    図番＊ AS 図番,
+    部番＊ AS 部番,
+    資材単価＊ AS 資材単価,
+    加工単価＊ AS 加工単価,
+    検査区分＊ AS 検査区分,
+    手配先コード＊ AS 手配先コード,
+    納入先コード＊ AS 納入先コード,
+    CASE
+        WHEN 変更日＊=0 THEN 0
+        ELSE 変更日＊ + 19500000
+    END AS 変更日,
+    CASE
+        WHEN 作成日＊=0 THEN 0
+        ELSE 作成日＊ + 19500000
+    END AS 作成日
+FROM PMDBPF
+WHERE
+    {0}
+ORDER BY 品目コード＊ ASC

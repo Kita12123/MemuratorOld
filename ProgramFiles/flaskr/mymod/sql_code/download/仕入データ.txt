@@ -1,0 +1,88 @@
+SELECT
+    CASE
+        WHEN 伝票日付=0 THEN 0
+        WHEN 伝票日付=999999 THEN 99999999
+        ELSE 伝票日付+19500000
+    END AS 伝票日付,
+    CASE
+        WHEN 納期=0 THEN 0
+        ELSE 納期+19500000
+    END AS 納期,
+    手配先コード AS 仕入先コード,
+    手配先カナ AS 仕入先カナ,
+    TR.手配先名＊ AS 仕入先名,
+    CASE
+        WHEN 補用区分='H' THEN '補用'
+        WHEN 補用区分='P' 
+          OR 補用区分='T' THEN '単発'
+        ELSE ''
+    END AS 発注区分,
+    品目コード,
+    品目カナ,
+    PM.仕様＊ AS 品目仕様＊,
+    PM.図番＊ AS 品目図番＊,
+    数量,
+    CASE
+        WHEN 勘定科目コード１=82110
+          OR 勘定科目コード１=82127
+          OR 勘定科目コード１=82535 THEN 単価１
+        ELSE 0
+    END AS 材料単価,
+    CASE
+        WHEN 勘定科目コード１=82110
+          OR 勘定科目コード１=82127
+          OR 勘定科目コード１=82535 THEN 単価１ * 数量
+        ELSE 0
+    END AS 材料金額,
+    CASE
+        WHEN 勘定科目コード１=82512 THEN 単価１
+        WHEN 勘定科目コード２=82512 THEN 単価２
+        ELSE 0
+    END AS 加工単価,
+    CASE
+        WHEN 勘定科目コード１=82512 THEN 単価１ * 数量
+        WHEN 勘定科目コード２=82512 THEN 単価２ * 数量
+        ELSE 0
+    END AS 加工金額,
+    機種コード,
+    機種カナ,
+    注文番号
+FROM NSFILEP
+LEFT OUTER JOIN PMDBPF PM ON PM.品目コード＊=品目コード
+LEFT OUTER JOIN RIPPTR TR ON TR.手配先コード＊=手配先コード
+WHERE
+    {0}
+UNION ALL
+SELECT
+    伝票日付+19500000 AS 伝票日付,
+    CASE
+        WHEN 納期=0 THEN 0
+        ELSE 納期+19500000
+    END AS 納期,
+    手配先コード AS 仕入先コード,
+    '' AS 仕入先カナ,
+    TR.手配先名＊ AS 仕入先名,
+    CASE
+        WHEN 補用区分='H' THEN '補用'
+        WHEN 補用区分='P' 
+          OR 補用区分='T' THEN '単発'
+        ELSE ''
+    END AS 発注区分,
+    品目コード,
+    品目カナ,
+    PM.仕様＊ AS 品目仕様＊,
+    PM.図番＊ AS 品目図番＊,
+    数量,
+    材料単価,
+    材料金額,
+    加工単価,
+    加工金額,
+    '' AS 機種コード,
+    '' AS 機種カナ,
+    伝票番号 AS 注文番号
+FROM RIPPGA
+LEFT OUTER JOIN PMDBPF PM ON PM.品目コード＊=品目コード
+LEFT OUTER JOIN RIPPTR TR ON TR.手配先コード＊=手配先コード
+WHERE
+    {0}
+ORDER BY 伝票日付 ASC

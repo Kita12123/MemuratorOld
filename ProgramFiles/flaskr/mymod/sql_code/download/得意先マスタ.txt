@@ -1,0 +1,27 @@
+SELECT
+    得意先コード１＊
+        || SUBSTR('000' || 得意先コード２＊,-2,2)
+        AS 得意先コード,
+    得意先カナ＊ AS カナ名,
+    得意先名＊ AS 名称,
+    担当者コード＊ AS 担当者コード,
+    ifnull(ET1.名称＊,'') AS 担当者名,
+    SUBSTR('0000' || 郵便番号１＊,-3,3)
+        || '-' ||
+        SUBSTR('000' || 郵便番号２＊,-4,4)
+        AS 郵便番号,
+    住所１＊ || 住所２＊ AS 住所,
+    電話番号＊ AS 電話番号,
+    締め日＊ AS 締め日,
+    ＬＥＳＳ率＊ AS ＬＥＳＳ率,
+    CASE
+        WHEN 作成日＊=0 THEN 0
+        WHEN 作成日＊=999999 THEN 99999999
+        ELSE 作成日＊+19500000
+    END AS 作成日
+FROM TOKMPF
+LEFT OUTER JOIN ETCMPF ET1 ON ET1.レコード区分＊=22 AND ET1.コード＊=担当者コード＊
+WHERE
+    {0}
+AND  得意先コード２＊<>0
+ORDER BY 得意先コード１＊, 得意先コード２＊ ASC

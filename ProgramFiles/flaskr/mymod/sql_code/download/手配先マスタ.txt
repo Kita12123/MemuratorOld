@@ -1,0 +1,8 @@
+SELECT
+    手配先コード＊ || '' AS 手配先コード,
+    手配先名＊ AS 名称,
+    手配先略称＊ AS 略称
+FROM RIPPTR
+WHERE
+    {0}
+ORDER BY 手配先コード＊ ASC

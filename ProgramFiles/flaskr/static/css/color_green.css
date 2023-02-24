@@ -1,0 +1,19 @@
+
+a:link,
+a:visited {
+    color: green;
+}
+button:hover {
+    background-color: green;
+    color: white;
+}
+.subtitle {
+    color: green;
+}
+footer,
+.dataframe th,
+#TableTagHeader,
+#Title {
+    background-color: rgb(190, 255, 210);
+    color: black;
+}

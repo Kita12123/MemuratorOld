@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+  入力フォームに誤りがあります!!
+{% endblock %}
+
+{% block content %}
+  エラー内容を表示しています。<br>
+  ※およそ最後の行に原因が書かれています<br>
+{% endblock %}
+
+{% block body %}
+  <h3>エラーメッセージ</h3>
+  {% autoescape false %}
+    {{ e }}
+  {% endautoescape %}
+{% endblock %}
