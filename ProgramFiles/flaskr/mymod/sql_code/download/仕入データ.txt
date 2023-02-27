@@ -22,31 +22,11 @@ SELECT
     PM.仕様＊ AS 品目仕様＊,
     PM.図番＊ AS 品目図番＊,
     数量,
-    CASE
-        WHEN 勘定科目コード１=82110
-          OR 勘定科目コード１=82127
-          OR 勘定科目コード１=82535 THEN 単価１
-        ELSE 0
-    END AS 材料単価,
-    CASE
-        WHEN 勘定科目コード１=82110
-          OR 勘定科目コード１=82127
-          OR 勘定科目コード１=82535 THEN 単価１ * 数量
-        ELSE 0
-    END AS 材料金額,
-    CASE
-        WHEN 勘定科目コード１=82512 THEN 単価１
-        WHEN 勘定科目コード２=82512 THEN 単価２
-        ELSE 0
-    END AS 加工単価,
-    CASE
-        WHEN 勘定科目コード１=82512 THEN 単価１ * 数量
-        WHEN 勘定科目コード２=82512 THEN 単価２ * 数量
-        ELSE 0
-    END AS 加工金額,
+    単価１ + 単価２ AS 単価,
+    金額１ + 金額２ AS 金額,
     機種コード,
     機種カナ,
-    注文番号
+    伝票番号
 FROM NSFILEP
 LEFT OUTER JOIN PMDBPF PM ON PM.品目コード＊=品目コード
 LEFT OUTER JOIN RIPPTR TR ON TR.手配先コード＊=手配先コード
@@ -73,13 +53,11 @@ SELECT
     PM.仕様＊ AS 品目仕様＊,
     PM.図番＊ AS 品目図番＊,
     数量,
-    材料単価,
-    材料金額,
-    加工単価,
-    加工金額,
+    材料単価 + 加工単価 AS 単価,
+    材料金額 + 加工金額 AS 金額,
     '' AS 機種コード,
     '' AS 機種カナ,
-    伝票番号 AS 注文番号
+    伝票番号
 FROM RIPPGA
 LEFT OUTER JOIN PMDBPF PM ON PM.品目コード＊=品目コード
 LEFT OUTER JOIN RIPPTR TR ON TR.手配先コード＊=手配先コード

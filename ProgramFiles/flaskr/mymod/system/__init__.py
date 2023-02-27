@@ -11,9 +11,13 @@ SYSTEM_JSON = os.path.join(SYSTEMDIR, "system.json")
 class SystemDictionary:
 
     def __init__(self):
-        # system.jsonが必要 (無い場合: {}のファイルを作成しておく)
-        with open(SYSTEM_JSON, mode="r", encoding="utf-8") as f:
-            filedic: dict[str, dict[str, str | dict[str, str]]] = json.load(f)
+        try:
+            with open(SYSTEM_JSON, mode="r", encoding="utf-8") as f:
+                filedic: dict[str, dict[str, str | dict[str, str]]] = json.load(f)
+        except (FileNotFoundError):
+            LOGGER.info(f"Create File ({SYSTEM_JSON})")
+            with open(SYSTEM_JSON, mode="w", encoding="utf-8") as f:
+                filedic: dict[str, dict[str, str | dict[str, str]]] = {}
         self.last_refresh_date = filedic.pop("LastRefreshDate", "")
         self.dic = {k: User(**v) for k, v in filedic.items()}
 

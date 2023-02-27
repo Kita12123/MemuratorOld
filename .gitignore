@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# User Define
+ProgramData/critical.txt
+ProgramData/database.db
+ProgramData/debug.txt
+ProgramData/info.txt
+ProgramData/system.json
+ProgramData/warning.txt

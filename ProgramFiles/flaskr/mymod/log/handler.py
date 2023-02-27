@@ -54,7 +54,7 @@ class Handler:
 
     @property
     def warning_file(self) -> FileHandler:
-        """Output info.txt"""
+        """Output warning.txt"""
         handler = FileHandler(
             WARNING_LOG,
             mode="w",
@@ -66,7 +66,7 @@ class Handler:
 
     @property
     def critical_file(self) -> FileHandler:
-        """Output info.txt"""
+        """Output critical.txt"""
         handler = FileHandler(
             CRITICAL_LOG,
             mode="a",

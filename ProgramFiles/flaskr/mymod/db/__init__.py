@@ -14,6 +14,8 @@ from ProgramFiles.flaskr.mymod.system import system
 odbc = connect.HostOnOdbc()
 sql = connect.DataBaseOnSqlite3()
 
+this_month = int(datetime.today().strftime(r"%Y%m")) - 195000
+
 
 class SyncHost:
 
@@ -28,6 +30,8 @@ class SyncHost:
     ) -> None:
         # HOST -> df
         LOGGER.info(f"Syncing {h.file_name}.{h.lib_name} ({where_sqlite3}) ...")
+        if h.file_name == "RIPPGA":
+            where_sqlite3 += f" AND 伝票日付>={this_month}00"
         where_host = h.to_where_host_by(where_sqlite3)
         df = odbc.create_df(sql=h.select_host_where(where_host))
         # df -> SQLite3
@@ -37,12 +41,20 @@ class SyncHost:
         #     sql.update_by_sql(h.sql_create_table)
         # else:
         sql.update_by_sql(sql=h.deleate_sqlite3_where(where_sqlite3))
-        sql.update_by_df(
-            df=df,
-            tablename=h.table_name,
-            if_exists="append",
-            index=False
-        )
+        if h.file_name == "RIPPGA":
+            sql.update_by_df(
+                df=df,
+                tablename=h.table_name,
+                if_exists="replace",
+                index=False
+            )
+        else:
+            sql.update_by_df(
+                df=df,
+                tablename=h.table_name,
+                if_exists="append",
+                index=False
+            )
 
     def refresh_all(
         self, *,
