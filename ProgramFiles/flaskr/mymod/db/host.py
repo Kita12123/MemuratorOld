@@ -411,36 +411,36 @@ host.add(
     }
 )
 
-host.add(
-    is_data=True,
-    name="当月仕入データ",
-    file_name="RIPPGA",
-    lib_name="FLIB",
-    table_name="RIPPGA",
-    columns_dic={
-        "手配先コード": ("仕入先コード", "INTEGER"),
-        "伝票日付": ("日付", "INTEGER"),
-        "データ区分": ("データ区分", "INTEGER"),
-        "伝票番号": ("伝票番号", "INTEGER"),
-        # "伝票行": ("行", "INTEGER"),
-        "品目コード": ("品目コード", "TEXT"),
-        "品目カナ": ("品名", "TEXT"),
-        "納入先コード": ("場所", "INTEGER"),
-        "数量": ("数量", "REAL"),
-        "材料単価": ("単価１", "REAL"),
-        "材料金額": ("金額１", "INTEGER"),
-        "納期": ("オーダー", "INTEGER"),
-        "補用区分": ("区分", "TEXT"),
-        # "反映フラグ": ("ＣＴ４１５フラグ", "INTEGER"),
-        "加工単価": ("単価２", "REAL"),
-        "加工金額": ("金額２", "INTEGER"),
-        "勘定科目コード": ("貸方", "INTEGER")
-        # "借方コード": ("借方１", "INTEGER"),
-        # "借方コード２": ("借方２", "INTEGER"),
-        # "連番": ("ＳＥＱ", "INTEGER"),
-        # "日報フラグ": ("日報フラグ", "TEXT")
-    }
-)
+#host.add(
+#    is_data=True,
+#    name="当月仕入データ",
+#    file_name="RIPPGA",
+#    lib_name="FLIB",
+#    table_name="RIPPGA",
+#    columns_dic={
+#        "手配先コード": ("仕入先コード", "INTEGER"),
+#        "伝票日付": ("日付", "INTEGER"),
+#        "データ区分": ("データ区分", "INTEGER"),
+#        "伝票番号": ("伝票番号", "INTEGER"),
+#        # "伝票行": ("行", "INTEGER"),
+#        "品目コード": ("品目コード", "TEXT"),
+#        "品目カナ": ("品名", "TEXT"),
+#        "納入先コード": ("場所", "INTEGER"),
+#        "数量": ("数量", "REAL"),
+#        "材料単価": ("単価１", "REAL"),
+#        "材料金額": ("金額１", "INTEGER"),
+#        "納期": ("オーダー", "INTEGER"),
+#        "補用区分": ("区分", "TEXT"),
+#        # "反映フラグ": ("ＣＴ４１５フラグ", "INTEGER"),
+#        "加工単価": ("単価２", "REAL"),
+#        "加工金額": ("金額２", "INTEGER"),
+#        "勘定科目コード": ("貸方", "INTEGER")
+#        # "借方コード": ("借方１", "INTEGER"),
+#        # "借方コード２": ("借方２", "INTEGER"),
+#        # "連番": ("ＳＥＱ", "INTEGER"),
+#        # "日報フラグ": ("日報フラグ", "TEXT")
+#    }
+#)
 
 host.add(
     is_data=False,
@@ -457,6 +457,7 @@ host.add(
         "数値２＊": ("数値（２）", "REAL")
     }
 )
+
 host.add(
     is_data=False,
     name="手配先マスタ",

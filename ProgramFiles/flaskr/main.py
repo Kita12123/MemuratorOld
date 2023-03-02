@@ -16,7 +16,7 @@ from dateutil.relativedelta import relativedelta
 from ProgramData import TEMP_CSV
 from ProgramFiles.flaskr.mymod.log import LOGGER
 from ProgramFiles.flaskr.mymod import db
-from ProgramFiles.flaskr.mymod.db import sync
+from ProgramFiles.flaskr.mymod.db import sync, host
 from ProgramFiles.flaskr.mymod.df import arrage_df
 from ProgramFiles.flaskr.mymod.system import system
 from ProgramFiles.flaskr.mymod.req import req
@@ -185,6 +185,7 @@ def download(flg):
 @app.route("/setting", methods=["GET", "POST"])
 def setting():
     user = system.load(request.remote_addr)
+    db_tables = [h.file_name for h in host.data_files]
     if request.method == "POST":
         click = request.form.get("ok")
         if click == "設定変更":
@@ -198,10 +199,12 @@ def setting():
             click == "最新データ取得"
             and system.last_refresh_date != "更新中"
         ):
+            table_name = request.form.get("table_name")
             sync.refresh_all(
                 first_date=request.form["first_date"].replace("-", ""),
                 last_date=request.form["last_date"].replace("-", ""),
-                contain_master=request.form.get("contain_master")
+                contain_master=request.form.get("contain_master"),
+                table_name=table_name
             )
             system.save_file()
     last_month = datetime.today() - relativedelta(months=1)
@@ -213,7 +216,8 @@ def setting():
         LastRefreshDate=system.last_refresh_date,
         first_date=last_month.strftime(r"%Y-%m-01"),
         last_date=datetime.now().strftime((r"%Y-%m-%d")),
-        log_texts=LOGGER.to_text_info()[-8:]
+        log_texts=LOGGER.to_text_info()[-8:],
+        db_tables=db_tables
     )
 
 

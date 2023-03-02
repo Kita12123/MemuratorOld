@@ -32,6 +32,7 @@ LEFT OUTER JOIN PMDBPF PM ON PM.品目コード＊=品目コード
 LEFT OUTER JOIN RIPPTR TR ON TR.手配先コード＊=手配先コード
 WHERE
     {0}
+/* RIPPGAはまだ実装しない
 UNION ALL
 SELECT
     伝票日付+19500000 AS 伝票日付,
@@ -62,5 +63,6 @@ FROM RIPPGA
 LEFT OUTER JOIN PMDBPF PM ON PM.品目コード＊=品目コード
 LEFT OUTER JOIN RIPPTR TR ON TR.手配先コード＊=手配先コード
 WHERE
-    {0}
+
 ORDER BY 伝票日付 ASC
+*/
