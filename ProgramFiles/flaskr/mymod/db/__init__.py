@@ -67,6 +67,7 @@ class SyncHost:
                 d,
                 where_sqlite3=f"伝票日付>={first_host} AND 伝票日付<={last_host}"
             )
+        print(contain_master)
         if contain_master:
             for m in host.master_files:
                 if table_name != "すべて" and table_name != d.file_name:

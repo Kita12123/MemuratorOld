@@ -57,7 +57,7 @@
     <br>
     <label for="table_name">テーブル指定:</label>
     <select id="table_name" name="table_name">
-      <option value="All" selected>すべて</option>
+      <option value="すべて" selected>すべて</option>
       {% for t in db_tables %}
         <option value="{{ t }}">{{ t }}</option>
       {% endfor %}

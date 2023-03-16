@@ -31,7 +31,8 @@ def schedule_fuction():
         sync.refresh_all(
             first_date=last_month.strftime(r"%Y%m00"),
             last_date=str(999999 + 19500000),
-            contain_master=True
+            contain_master=True,
+            table_name="すべて"
         )
 
 
