@@ -126,7 +126,7 @@ def search(column):
         )
         return redirect("/")
     # user_dic, master_query作成
-    elif "DB_name" in req.form_to_dict():
+    if "DB_name" in req.form_to_dict():
         # ここのQUERYを保存するかしないかの判定がむずかしい
         # indexからきた場合はする
         user.form.update(**req.form_to_dict())

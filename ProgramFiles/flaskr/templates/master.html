@@ -50,7 +50,9 @@
         <tr>
           <td><label><input type="checkbox" id="checkBoxAll" onclick="checkBoxChecked();"></label></td>
           {% for header in headers %}
-            <td><input class="form" name="{{ header }}" value="{{ user_form[header] }}"></td>
+            <td>
+              <input class="form" name="{{ header }}" value="{{ request.form.get(header, '') }}">
+            </td>
           {% endfor %}
         </tr>
         <tr>
