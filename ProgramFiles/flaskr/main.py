@@ -34,6 +34,7 @@ def schedule_fuction():
             contain_master=True,
             table_name="すべて"
         )
+    system.save_file()
 
 
 @app.route("/", methods=["GET"])
